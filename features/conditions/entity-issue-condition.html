@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- jQuery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <!-- Atlassian User Interface (AUI) -->
+        <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css" media="all">
+        <script src="//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js"></script>
+        <!-- Helper Javascript lib -->
+        <script src="../../utils.js" type="text/javascript"></script>
+    </head>
+    <body style="background-color: #FFF;">
+        <div class="ac-content">
+            <p>This web-panel will be toggled on and off, on an issue level</p>
+        </div>
+        <script>
+            $(document).ready(function () {
+                var allJS = Utils.getBaseUrl() + '/all.js';
+                $.getScript(allJS, function () {
+                    // Once they are loaded, the ac-content class will be resized
+                });
+            });
+        </script>
+   </body>
+</html>
+
+<!--
+
+{
+    "url": "features/conditions/entity-issue-condition.html",
+    "key": "entity-issue-cond",
+    "location": "atl.jira.view.issue.right.context",
+    "name": {
+        "value": "Conditions - Entity Issue"
+    },
+    "conditions": [
+        {
+            "condition": "entity_property_equal_to",
+            "params": {
+                "entity": "issue",
+                "propertyKey": "isDisabled",
+                "value": "true"
+            },
+            "invert": true
+        }
+    ]
+}
+
+-->

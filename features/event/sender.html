@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- jQuery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <!-- Atlassian User Interface (AUI) -->
+        <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css" media="all">
+        <script src="//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js"></script>
+        <!-- Helper Javascript lib -->
+        <script src="../../utils.js" type="text/javascript"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+    </head>
+    <body style="background-color: #FFF;">
+        <div class="ac-content">
+            <p class="aui-buttons">
+                <button id="decreaseButton" class="aui-button">Subtract</button>
+                <button id="increaseButton" class="aui-button">Add</button>
+            </p>
+        </div>
+
+        <script>
+            // Waits for document to load
+            $(document).ready(function () {
+                // Creates url for atlassian-connect/all.js resource from host application
+                var allJS = Utils.getBaseUrl() + '/all.js';
+                // Dynamically loads the script
+                $.getScript(allJS, function () {
+                    // Creates an event handler on the button
+                    $("#increaseButton").on("click", function () {
+                        // Requests the 'events' module from atlassian-connect/all.js
+                        AP.require('events', function(events) {
+                            // Emits event with event name to other iframes on clients browser
+                            events.emit("staticTutorial-increase");
+                        });
+                    });
+                });
+            });
+      </script>
+   </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- jQuery -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+      <!-- Atlassian User Interface (AUI) -->
+      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css" media="all">
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js"></script>
+      <!-- Helper Javascript lib -->
+      <script src="../../utils.js" type="text/javascript"></script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+
+
+   </head>
+   <body class="ac-content" style="background-color: #FFF;">
+      <section id="content">
+         <div class="aui-page-header">
+             <div class="aui-page-header-main">
+                 <form action="/" id="getForm" class="aui">
+                     <input type="text" name="get" placeholder="Get">
+                     <input type="submit" value="Send get">
+                 </form>
+                 <form action="/" id="setForm" class="aui">
+                     <input type="text" name="set" placeholder="Set">
+                     <input type="text" name="value" placeholder="Val">
+                     <input type="submit" value="Send set">
+                 </form>
+                 <form action="/" id="deleteForm" class="aui">
+                     <input type="text" name="delete" placeholder="Delete">
+                     <input type="submit" value="Send delete">
+                 </form>
+                 <button id="list" class="aui-button">List</button>
+                 <div id="mydata"></div>
+                 <table id="myTable" class="aui">
+                     <thead>
+                     <tr>
+                         <th id="method">Method</th>
+                         <th id="key">Key</th>
+                         <th id="response">Response</th>
+                     </tr>
+                     </thead>
+                 </table>
+             </div>
+         </div>
+     </section>
+
+<script>
+
+// Creates baseurl in order to make REST API calls for JIRA Enitiy properties
+function getBaseAPIUrl() {
+   var partialRestApi = "/rest/api/2/issue/";
+   var issueKey = Utils.getUrlParam("issueKey", true);
+   return partialRestApi + issueKey + "/properties/";
+}
+
+// Loads all-debug.js to allow communication between the iframe and host-product browser via the xdm-bridge
+var allJS = Utils.getBaseUrl() + '/all-debug.js';
+$.getScript(allJS, function () {
+
+   // Captures the event from the getForm element when either the submit button or the enter key is pressed 
+   $("#getForm").submit(function (event) {
+      event.preventDefault();
+      var $form = $(this);
+      var entityKey = $form.find("input[name='get']").val();
+
+      AP.require('request', function (request) {
+         var r = createRequest("GET", entityKey);
+         request(r);
+      });
+   });
+
+   // Creates or updates key's value on JIRA entity
+   $("#setForm").submit(function (event) {
+      event.preventDefault();
+      var $form = $(this);
+      var entityKey = $form.find("input[name='set']").val();
+      var val = $form.find("input[name='value']").val();
+
+      AP.require('request', function (request) {
+         var r = createRequest("PUT", entityKey, val);
+         request(r);
+      });
+   });
+
+   // Deletes key from JIRA issue entitys if found
+   $("#deleteForm").submit(function (event) {
+      event.preventDefault();
+      var $form = $(this);
+      var entityKey = $form.find("input[name='delete']").val();
+
+      AP.require('request', function (request) {
+         var r = createRequest("DELETE", entityKey);
+         request(r);
+      });
+   });
+
+   // Gets list of all entity keys avalible on the current issue
+   $("#list").click( function() {
+      AP.require('request', function (request) {
+         var r = {
+            // By providing the baseUrl with no key, JIRA will return all the keys
+            url: getBaseAPIUrl(),
+            success: function (responseText) {
+               $("#mydata").empty();
+               var json = jQuery.parseJSON(responseText).keys;
+               for (var i = 0; i < json.length; i++) {
+                  console.log(json[i].self);
+                  $("#mydata").append(json[i].self + ' ' + json[i].key + "<br/>");
+               }
+            }
+         };
+         request(r);
+      });
+   });
+
+   // Creates the base request from the request type, and entity key.
+   // data is only required if the reqType is "PUT"
+   var createRequest = function(reqType, entityKey, data) {
+      var r = {
+         url: getBaseAPIUrl() + entityKey,
+         type: reqType,
+         success: function (responseText, textStatus, jqXHR) {
+            addToTable(reqType, entityKey, responseText);
+         },
+         error: function (jqXHR, textStatus, errorThrown) {
+            addToTable(reqType, entityKey, jqXHR.responseText);
+         },
+         contentType: 'application/json'
+      };
+      if (reqType === "PUT") {
+         r.data = data;
+      }
+      return r;
+   };
+
+   // Adds Call with response to the table
+   function addToTable(method, key, response) {
+      $('#myTable').append('<tr><td>' + method + '</td><td>' + key + '</td><td>'+ response + '</td></tr>');
+   }
+});
+
+
+
+        </script>
+   </body>
+</html>

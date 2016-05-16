@@ -1,0 +1,27 @@
+{
+   "key": "com.atlassian.jira.static.tutorial.local",
+   "name": "Static Tutorial for JIRA (Local)",
+   "version": "1.0",
+   "description": "Tutorial Add-on for learning Connect",
+   "vendor": {
+      "name": "Atlassian",
+      "url": "http://www.atlassian.com"
+   },
+   "baseUrl": "http://localhost:3311",
+   "authentication": {
+      "type": "none"
+   },
+   "scopes": [ "READ" ],
+   "modules": {
+      "generalPages": [
+         {
+            "url": "/hello-you.html",
+            "key": "hello-world",
+            "location": "system.top.navigation.bar",
+            "name": {
+               "value": "Click me"
+            }
+         }
+      ]
+   }
+}

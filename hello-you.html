@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- jQuery -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+      <!-- Atlassian User Interface (AUI) -->
+      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css" media="all">
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js"></script>
+
+      <!-- Helper Javascript lib -->
+      <script src="utils.js" type="text/javascript"></script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+
+      <script>
+$(document).ready(function () {
+   var allJS = Utils.getBaseUrl() + '/all.js';
+   $.getScript(allJS, function () {
+
+      //Call a REST endpoint using the Atlassian Connect Javascript library
+      
+      AP.request({
+         url: "/rest/api/latest/myself",
+         headers: {"accept": "application/json"},
+         success: function (responseText) {
+            console.log(responseText);
+            var userJson = $.parseJSON(responseText);
+            $("#userName").text(userJson.displayName);
+         },
+         error: function (responseText) {
+            $("#missing-read-scope").removeClass("hidden");
+         }
+      });
+      
+   });
+});
+      </script>
+
+   </head>
+   <body>
+      <div class="ac-content">
+         <div id="missing-read-scope" class="aui-message aui-message-error hidden">
+            <p class="title">
+            <strong>Missing read scope!</strong>
+            </p>
+            <p>Your addon requires read scope in order to make a request for the username of the currently logged in user. Please add read scope to the atlassian connect descriptor file and reinstall the addon. Then perform a hard browser refresh to clear any cached HTML or JS.</p>
+         </div>
+         <div class="aui-message success">
+            <p class="title">
+            <strong>Hello <span id="userName">World!</span></strong>
+            </p>
+            <p>Look at you, getting all fancy with your Atlassian Connect add-on :-) </p>
+            <p>Now you can relax and have fun with <a href="javascript:generateFunkyStuff()">this</a>.</p>
+         </div>
+      </div>
+   </body>
+</html>

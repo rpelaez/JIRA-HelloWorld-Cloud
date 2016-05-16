@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- jQuery -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+      <!-- Atlassian User Interface (AUI) -->
+      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css" media="all">
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js"></script>
+      <!-- Helper Javascript lib -->
+      <script src="../../utils.js" type="text/javascript"></script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+
+
+   </head>
+   <body class="ac-content" style="background-color: #FFF;">
+      <section id="aui-page-panel-content">
+         <div class="aui-page-header">
+             <div class="aui-page-header-main">
+                <table id="todo-list" class="aui">
+                     <thead>
+                     <tr>
+                         <th id="done">Done</th>
+                         <th id="task">Task</th>
+                         <th id="remove-button"></th>
+                     </tr>
+                     </thead>
+                 </table>
+                 <form action="/" id="setForm" class="aui">
+                     <input type="text" name="task" placeholder="Task">
+                     <input type="submit" value="Submit Task">
+                 </form>
+             </div>
+         </div>
+     </section>
+
+<script>
+
+
+function getBaseAPIUrl() {
+  var partialRestApi = "/rest/api/2/issue/";
+  var issueKey = Utils.getUrlParam("issueKey", true);
+  return partialRestApi + issueKey + "/properties/";
+}
+
+var allJS = Utils.getBaseUrl() + '/all-debug.js';
+
+// Object to have all todo's on 
+var todos = {};
+
+$.getScript(allJS, function () {
+
+  function addTodo(taskname) {
+    var task = {"task": taskname, "done": false};
+    saveTodo(task, function() {
+      todos[taskname] = task;
+      addToTable(false, taskname);
+    });
+  };
+
+  $("#setForm").submit(function (event) {
+    event.preventDefault();
+    var $form = $(this);
+    var task = $form.find("input[name='task']").val();
+    if (todos[task] !== undefined && task !== "") {
+      return;
+    }
+    addTodo(task)
+  });
+
+  function saveTodo(task, callback) {
+    createAndSendEntityRequest("PUT", task.task, callback, JSON.stringify(task));
+  };
+
+  function createRequest(reqType, entityKey, callback, data) {
+    var r = {
+      url: getBaseAPIUrl() + entityKey,
+      type: reqType,
+      contentType: 'application/json',
+      success: callback
+    };
+    if (reqType === "PUT") {
+      r.data = data;
+    }
+    return r;
+  };
+
+  function sendRequest(r) {
+    AP.require('request', function(request) {
+      request(r);
+    });
+  };
+
+  // Sends a request to get or alter an entity property
+  function createAndSendEntityRequest(reqType, entityKey, callback, data) {
+    var r = createRequest(reqType, entityKey, callback, data);
+    sendRequest(r);
+  };
+
+  // Gets all todos from an instance and populates the table
+  function getAllToDos() {
+    createAndSendEntityRequest("GET", "", function(responseText) {
+      var jsonRes = JSON.parse(responseText);
+      var keys = jsonRes.keys;
+      $.each(keys, function(index, key) {
+        getToDo(key.key);
+      });
+    });
+  };
+
+  // Makes request to JIRA to get content of task and populates the table
+  function getToDo(taskname) {
+    createAndSendEntityRequest("GET", taskname, function(responseText) {
+      var jsonRes = JSON.parse(responseText);
+      var task = jsonRes.value;
+      // Check if jsonObject is a representaion of a task
+      if (task.done !== undefined && task.task !== undefined) {
+        todos[task.task] = task;
+        addToTable(task.done, task.task);
+      }
+    });
+  };
+
+  // Loads all todos on page ready
+  $(document).ready(function() {
+    getAllToDos();
+  });
+
+  function addToTable(done, task) {
+    var element = $('<tr class="task-row"></tr>');
+    var checkbox = $('<input class="checkbox" type="checkbox"/>');
+    if (done) {
+      checkbox.attr("checked", "");
+    }
+    element.append($("<td></td>").append(checkbox));
+    element.append($('<td><p class="task-name">'+task+'</p></td>'));
+    element.append($('"<td><button class="remove-task aui-button">Delete</button></td>"'));
+    $('#todo-list').append(element);
+  }
+
+  // Gets event if a checkbox in the table is switched, and updates corresponding entity
+  $("#todo-list").on("change", "input:checkbox", function() {
+    var taskname = getTaskNameFromElement(this);
+    todos[taskname].done = $(this).is(":checked");
+    saveTodo(todos[taskname], function(){ console.log("Saved Successfully")});
+  });
+
+  // Gets event for a delete button being pressed, and updates table
+  $("#todo-list").on("click", ".remove-task", function() {
+    var taskname = getTaskNameFromElement(this);
+    delete todos[taskname];
+    $(this).parents(".task-row").remove();
+
+    // TODO Send delete command to JIRA issue entity property
+
+  });
+
+  function getTaskNameFromElement(element) {
+    var current = $(element);
+    var taskrow = current.parents(".task-row");
+    var task = taskrow.find(".task-name");
+    return task.html();
+  }
+});
+
+
+
+
+
+        </script>
+   </body>
+</html>
