@@ -7,7 +7,7 @@
       "name": "Atlassian",
       "url": "http://www.atlassian.com"
    },
-   "baseUrl": "http://localhost:3311",
+   "baseUrl": "https://raw.githubusercontent.com",
    "authentication": {
       "type": "none"
    },
