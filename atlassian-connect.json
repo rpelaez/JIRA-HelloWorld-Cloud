@@ -36,7 +36,7 @@
     "webPanels": [
         {
             "key": "my-web-panel",
-            "url": "javascript:alert('hola'); //web-panel?id={board.id}&mode={board.screen}",
+            "url": "https://es.wikipedia.org/wiki/JavaScript",
             "location": "board-links",
             "name": {
                 "value": "My Web Panel"
