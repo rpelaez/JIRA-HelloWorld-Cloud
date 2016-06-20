@@ -1,0 +1,40 @@
+{
+  "key": "jira-activity",
+  "name": "JIRA Project Activity",
+  "description": "A Connect add-on that displays JIRA projects in a table",
+  "vendor": {
+    "name": "Atlassian Developer Relations",
+    "url": "https://developer.atlassian.com/"
+  },
+  "baseUrl": "{{localBaseUrl}}",
+  "links": {
+    "self": "{{localBaseUrl}}/atlassian-connect.json",
+    "homepage": "{{localBaseUrl}}/atlassian-connect.json"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    // atlassian-connect-express expects this route to be configured to manage the installation handshake
+    "installed": "/installed"
+  },
+  "scopes": [
+    "READ"
+  ],
+  "modules": {
+    "generalPages": [
+
+      {
+        "key": "activity",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "Activity"
+        },
+        "url": "/activity",
+        "conditions": [{
+          "condition": "user_is_logged_in"
+        }]
+      }
+    ]
+  }
+}
