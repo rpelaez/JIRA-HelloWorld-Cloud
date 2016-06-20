@@ -29,7 +29,7 @@
             "location": "jira.agile.board.tools",
 			"weight": 10,
             "name": {
-                "value": "My Extension22\"</button><script>alert('hola');</script><button type=\"hidden\">"
+                "value": "My Extension22\"\"</button><script>alert('hola');</script><button type=\"hidden\">"
             }
         }
     ],   
