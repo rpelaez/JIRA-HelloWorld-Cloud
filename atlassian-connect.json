@@ -36,7 +36,7 @@
     "webPanels": [
         {
             "key": "my-web-panel",
-            "url": "web-panel.html",
+            "url": "web-panel?id={board.id}&mode={board.screen}",
             "location": "board-links",
             "name": {
                 "value": "My Web Panel"
