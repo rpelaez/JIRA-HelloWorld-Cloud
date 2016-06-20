@@ -7,11 +7,10 @@
       "name": "Atlassian",
       "url": "http://www.atlassian.com"
    },
-   "baseUrl": "https://raw.githubusercontent.com/rpelaez/JIRA-HelloWorld-Cloud/master/",
+   "baseUrl": "http://localhost:3311",
    "authentication": {
       "type": "none"
    },
-   "scopes": [ "READ" ],
    "modules": {
       "generalPages": [
          {
@@ -22,30 +21,6 @@
                "value": "Click me"
             }
          }
-      ],
-      "webSections": [
-        {
-            "key": "board-links",
-            "location": "jira.agile.board.tools",
-			"weight": 10,
-            "name": {
-                "value": "Extension"
-            }
-        }
-    ],   
-    "webPanels": [
-        {
-            "key": "my-web-panel",
-            "url": "web-panel?id={board.id}&mode={board.screen}",
-            "location": "board-links",
-            "name": {
-                "value": "My Web Panel"
-            },
-			"layout": {
-				"width": "300px",
-				"height": "300px"
-			}
-        }
-    ]
+      ]
    }
 }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head profile="http://www.w3.org/2005/10/profile">
+      <meta charset="utf-8" />
+
+      <meta content="IE=EDGE" http-equiv="X-UA-Compatible" /> 
+
+      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.17/css/aui.min.css" media="all">
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.9.17/js/aui.min.js"></script>
+
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.9.17/js/aui-datepicker.min.js"></script>
+
+      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.17/css/aui-experimental.min.css" media="all">
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.9.17/js/aui-experimental.min.js"></script>
+
+      <script src="//aui-cdn.atlassian.com/aui-adg/5.9.17/js/aui-soy.min.js"></script>
+
+      <link rel="icon" type="image/ico" href="/static/${resourcesVersion}/images/hackathon-favicon.ico" />
+
+   </head>
+   <body class="body ${body-class}" id="panel-body">
+      <header id="header" role="banner">
+         <nav class="aui-header aui-dropdown2-trigger-group" role="navigation">
+            <div class="aui-header-primary">
+               <h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/"><span
+                        class="aui-header-logo-text">Atlassian Connect Statitc Tutorial</span></a></h1>
+               <ul class="aui-nav">
+                  <!-- You can also use a split button in this location, if more than one primary action is required. -->
+                  <li><a class="aui-button aui-button-primary" href="/atlassian-connect.json">Install plugin</a></li>
+               </ul>
+            </div>
+            <div class="aui-header-secondary">
+               <ul class="aui-nav">
+                  <li><a href="/redirect/help" aria-owns="dropdown2-header7" aria-haspopup="true" class="aui-dropdown2-trigger-arrowless aui-dropdown2-trigger" aria-controls="dropdown2-header7"><span class="aui-icon aui-icon-small aui-iconfont-help">Help</span></a>
+                  <div class="aui-dropdown2 aui-style-default aui-dropdown2-in-header" id="dropdown2-header7" style="display: none; top: 40px; min-width: 160px; left: 1213px; " aria-hidden="true">
+                     <div class="aui-dropdown2-section">
+                        <ul>
+                           <li><a href="http://go.atlassian.com/ac-static-raise-issue">Report a bug</a></li>
+                           <li><a href="http://go.atlassian.com/ac-static-about">About</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+      </header>
+
+      <div class="aui-page-panel">
+         <div class="aui-page-panel-inner">
+            <div class="aui-page-panel-nav">
+               <nav class="aui-navgroup aui-navgroup-vertical">
+                  <div class="aui-navgroup-inner">
+                  <ul class="aui-nav">
+                  <li><a href="/">Welcome</a></li>
+                  </ul>
+                  <div class="aui-nav-heading"><strong>More</strong></div>
+                  <ul class="aui-nav">
+                  <li><a href="http://go.atlassian.com/ac-static-about">About</a></li>
+                  <li><a href="http://go.atlassian.com/ac-static-raise-issue">Report a bug</a></li>
+                  </ul>
+                  </div>
+               </nav>
+            </div>
+
+            <section id="page-html-content" class="aui-page-panel-content">
+               <p>Welcome to the index page for the Atlassian Connect Static tutorial. To install
+               this add-on in your production instance:</p>
+               <ol>
+                  <li>Copy the following link: <a href="/atlassian-connect.json">Add-on descriptor</a></li>
+                  <li>Navigate to your Atlassian Cloud JIRA instance and navigate to the 'Manage
+                     add-ons' administration page</li>
+                  <li>Click on 'Settings' in the bottom left of the Manage add-ons section and
+                     "Enable development mode"</li>
+                  <li>Click on 'Upload add-on' and paste in the link to the Add-on descriptor that
+                     you copied from the first step.</li>
+               </ol>
+               <p>Congratulations, you have now installed this Atlassian Connect add-on on your
+               Atlassian Cloud production instance.</p>
+            </section>
+         </div>
+      </div>
+
+      <footer id="footer" role="contentinfo">
+         <section class="footer-body">
+            <ul>
+               <li><a target="_blank" href="https://connect.atlassian.com">Atlassian Connect</a></li>
+               <li><a target="_blank" href="/atlassian-connect.json">Add-on descriptor</a></li>
+            </ul>
+            <div id="footer-logo"><a href="http://www.atlassian.com/" target="_blank">Atlassian</a></div>
+         </section>
+      </footer>
+   </body>
+</html>
