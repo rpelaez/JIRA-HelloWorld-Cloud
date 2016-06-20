@@ -22,6 +22,30 @@
                "value": "Click me"
             }
          }
-      ]
+      ],
+      "webSections": [
+        {
+            "key": "board-links",
+            "location": "jira.agile.board.tools",
+			"weight": 10,
+            "name": {
+                "value": "My Extension"
+            }
+        }
+    ],   
+    "webPanels": [
+        {
+            "key": "my-web-panel",
+            "url": "web-panel?id={board.id}&mode={board.screen}",
+            "location": "board-links",
+            "name": {
+                "value": "My Web Panel"
+            },
+			"layout": {
+				"width": "100px",
+				"height": "100px"
+			}
+        }
+    ]
    }
 }
