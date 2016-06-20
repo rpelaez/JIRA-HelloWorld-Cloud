@@ -1,0 +1,3 @@
+app.get('/web-panel', function(req,res){
+	res.render("webpanel", {id : req.query['id'], mode : req.query['mode'] });
+});
