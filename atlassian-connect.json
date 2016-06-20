@@ -36,14 +36,14 @@
     "webPanels": [
         {
             "key": "my-web-panel",
-            "url": "/web-panel.html",
+            "url": "web-panel.html",
             "location": "board-links",
             "name": {
                 "value": "My Web Panel"
             },
 			"layout": {
-				"width": "100px",
-				"height": "100px"
+				"width": "300px",
+				"height": "300px"
 			}
         }
     ]
