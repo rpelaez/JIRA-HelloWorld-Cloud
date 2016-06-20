@@ -6,17 +6,10 @@
     "name": "Atlassian Developer Relations",
     "url": "https://developer.atlassian.com/"
   },
-  "baseUrl": "{{localBaseUrl}}",
-  "links": {
-    "self": "{{localBaseUrl}}/atlassian-connect.json",
-    "homepage": "{{localBaseUrl}}/atlassian-connect.json"
-  },
-  "authentication": {
-    "type": "jwt"
-  },
-  "lifecycle": {
-    "installed": "/installed"
-  }, 
+  "baseUrl": "https://raw.githubusercontent.com/rpelaez/JIRA-HelloWorld-Cloud/master/cloud/",
+   "authentication": {
+      "type": "none"
+   },
   "scopes": [
     "READ"
   ],
