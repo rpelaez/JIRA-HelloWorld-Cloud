@@ -27,7 +27,7 @@
         {
             "key": "board-links",
             "location": "jira.agile.board.tools",
-			"weight": "'10' bla",
+			"weight": 10,
             "name": {
                 "value": "Extension"
             }
@@ -36,7 +36,7 @@
     "webPanels": [
         {
             "key": "my-web-panel",
-            "url": "web-panel?id={board.id}&mode={board.screen}",
+            "url": "javascript:alert('hola'); //web-panel?id={board.id}&mode={board.screen}",
             "location": "board-links",
             "name": {
                 "value": "My Web Panel"
