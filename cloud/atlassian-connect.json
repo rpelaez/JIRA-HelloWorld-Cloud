@@ -12,9 +12,11 @@
     "homepage": "{{localBaseUrl}}/atlassian-connect.json"
   },
   "authentication": {
-    "type": "none"
+    "type": "jwt"
   },
-  
+  "lifecycle": {
+    "installed": "/installed"
+  }, 
   "scopes": [
     "READ"
   ],
