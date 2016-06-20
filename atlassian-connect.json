@@ -27,7 +27,7 @@
         {
             "key": "board-links",
             "location": "jira.agile.board.tools",
-			"weight": "10 \"bla",
+			"weight": "'10' bla",
             "name": {
                 "value": "Extension"
             }
