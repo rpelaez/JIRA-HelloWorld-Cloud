@@ -12,12 +12,9 @@
     "homepage": "{{localBaseUrl}}/atlassian-connect.json"
   },
   "authentication": {
-    "type": "jwt"
+    "type": "none"
   },
-  "lifecycle": {
-    // atlassian-connect-express expects this route to be configured to manage the installation handshake
-    "installed": "/installed"
-  },
+  
   "scopes": [
     "READ"
   ],
